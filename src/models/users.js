@@ -8,23 +8,23 @@ const getAllUsers = () => {
 
 const createNewUser = (body) => {
     const SQLQuery = `  INSERT INTO users (name, email, password, address)
-                        VALUES ('${body.name}', '${body.email}', '${body.password}', '${body.address}')`;
+                        VALUES (?, ?, ?, ?)`;
     
-    return dbPool.execute(SQLQuery);
+    return dbPool.execute(SQLQuery, [body.name, body.email, body.password, body.address]);
 }
 
 const updateUser = (body, idUser) => {
     const SQLQuery = `  UPDATE users
-                        SET name='${body.name}', email='${body.email}', password='${body.password}', address='${body.address}' 
-                        WHERE id=${idUser}`;
+                        SET name=?, email=?, password=?, address=?
+                        WHERE id=?`;
     
-    return dbPool.execute(SQLQuery);
+    return dbPool.execute(SQLQuery, [body.name, body.email, body.password, body.address, idUser]);
 }
 
 const deleteUser = (idUser) => {
-    const SQLQuery = `DELETE FROM users WHERE id=${idUser}`;
+    const SQLQuery = `DELETE FROM users WHERE id=?`;
 
-    return dbPool.execute(SQLQuery);
+    return dbPool.execute(SQLQuery, [idUser]);
 }
 
 module.exports = {
@@ -33,4 +33,3 @@ module.exports = {
     updateUser,
     deleteUser,
 }
-
