@@ -1,64 +1,168 @@
-# ExpressRestAPI
+# Nurtur RESTful API
 
-## Base URL:
+Sebuah RESTful API untuk manajemen data pengguna yang dibangun dengan Node.js, Express, dan MySQL. API ini dirancang dengan mempertimbangkan keamanan dan kemudahan penggunaan.
 
-## Backend APIs Architecture
+## Features
 
-![Image Backend API Architecture](https://storage.googleapis.com/model-resnet/Backend-API-Architecture.png)
+-   **CRUD Operations**: Menyediakan endpoint lengkap untuk Create, Read, Update, dan Delete (CRUD) data pengguna.
+-   **Keamanan**: Menggunakan *prepared statements* untuk melindungi dari serangan SQL Injection.
+-   **Validasi Input**: Menerapkan validasi dasar di sisi server untuk memastikan integritas data.
+-   **Respons Terstandarisasi**: Menggunakan format JSON yang konsisten untuk semua respons sukses dan error.
+-   **Manajemen Konfigurasi**: Konfigurasi terpusat untuk kemudahan pengelolaan environment.
 
-## Tech
+## API Endpoints
 
-Nurtur uses a number of open source projects to work properly:
+Berikut adalah dokumentasi untuk setiap endpoint yang tersedia.
 
-- [node.js] - evented I/O for the backend
-- [Express] - fast node.js network app framework
-- [MySQL] - MySQL is the world's most popular open source database
-- [App Engine] - Serverless platform that allows users to develop and run applications on Google's infrastructure.
+### Get All Users
 
-## Installation.
+-   **Method**: `GET`
+-   **Endpoint**: `/users`
+-   **Deskripsi**: Mengambil semua data pengguna.
+-   **Contoh Respons Sukses (200 OK)**:
+    ```json
+    {
+        "message": "GET all users berhasil",
+        "data": [
+            {
+                "id": 1,
+                "name": "John Doe",
+                "email": "john@example.com",
+                "address": "123 Main St"
+            },
+            {
+                "id": 2,
+                "name": "Jane Doe",
+                "email": "jane@example.com",
+                "address": "456 Oak Ave"
+            }
+        ]
+    }
+    ```
 
-1. Install NPM dependencies
+### Create New User
 
-```sh
-npm install
+-   **Method**: `POST`
+-   **Endpoint**: `/users`
+-   **Deskripsi**: Membuat pengguna baru.
+-   **Request Body**:
+    ```json
+    {
+        "name": "John Doe",
+        "email": "john@example.com",
+        "password": "securepassword123",
+        "address": "123 Main St"
+    }
+    ```
+-   **Contoh Respons Sukses (200 OK)**:
+    ```json
+    {
+        "message": "CREATE new user berhasil",
+        "data": {
+            "name": "John Doe",
+            "email": "john@example.com",
+            "password": "securepassword123",
+            "address": "123 Main St"
+        }
+    }
+    ```
+-   **Contoh Respons Gagal (400 Bad Request)**:
+    ```json
+    {
+        "message": "Request Body tidak valid",
+        "error": "Nama, email, dan password harus diisi"
+    }
+    ```
+
+### Update User
+
+-   **Method**: `PATCH`
+-   **Endpoint**: `/users/:idUser`
+-   **Deskripsi**: Memperbarui data pengguna berdasarkan ID.
+-   **Request Body**:
+    ```json
+    {
+        "name": "John Doe Updated",
+        "address": "456 New Ave"
+    }
+    ```
+-   **Contoh Respons Sukses (200 OK)**:
+    ```json
+    {
+        "message": "UPDATE user berhasil",
+        "data": {
+            "id": "1",
+            "name": "John Doe Updated",
+            "address": "456 New Ave"
+        }
+    }
+    ```
+
+### Delete User
+
+-   **Method**: `DELETE`
+-   **Endpoint**: `/users/:idUser`
+-   **Deskripsi**: Menghapus pengguna berdasarkan ID.
+-   **Contoh Respons Sukses (200 OK)**:
+    ```json
+    {
+        "message": "Delete user berhasil",
+        "data": null
+    }
+    ```
+
+## Struktur Proyek
+```
+/
+├── src/
+│   ├── config/         # Konfigurasi aplikasi (database, env)
+│   ├── controller/     # Logika bisnis (request & response)
+│   ├── middleware/     # Middleware Express (e.g., logging)
+│   ├── models/         # Interaksi dengan database (query)
+│   └── routes/         # Definisi rute API
+├── .env.example        # Contoh variabel environment
+├── .gitignore
+├── package.json
+└── README.md
 ```
 
-2. Run nodemon
+## Instalasi dan Setup
 
-```sh
-nodemon start
-```
+1.  **Clone repository ini:**
+    ```sh
+    git clone <URL_REPOSITORY_ANDA>
+    cd <NAMA_DIREKTORI>
+    ```
 
-3. Set Environment Variables
+2.  **Install dependencies:**
+    ```sh
+    npm install
+    ```
 
-```sh
-APP_URL = http://localhost
-PORT = 4000
+3.  **Setup Environment Variables:**
+    Salin file `.env.example` menjadi `.env`.
+    ```sh
+    cp .env.example .env
+    ```
+    Kemudian, sesuaikan isinya dengan konfigurasi database Anda.
+    ```
+    PORT=5000
+    DB_HOST=localhost
+    DB_USERNAME=root
+    DB_PASSWORD=
+    DB_NAME=nama_database_anda
+    ```
 
-DB_CONNECTION = your_type_DB
-DB_HOST = your_host_DB
-DB_PORT = your_port_DB
-DB_USERNAME= your_username
-DB_PASSWORD=your_password
-DB_NAME = your_name_DB
-```
+4.  **Jalankan aplikasi:**
+    ```sh
+    npm start
+    ```
+    Server akan berjalan di `http://localhost:5000`.
 
-4. Run App
+## Tech Stack
 
-```sh
-npm run
-```
-
-## Exemple Test on Local
-![A](https://storage.googleapis.com/model-resnet/Test%20Postman/Screenshot%202023-12-20%20024304.png)
-
-![B](https://storage.googleapis.com/model-resnet/Test%20Postman/Screenshot%202023-12-20%20024427.png)
-
-![C](https://storage.googleapis.com/model-resnet/Test%20Postman/Screenshot%202023-12-20%20024756.png)
-
-![D](https://storage.googleapis.com/model-resnet/Test%20Postman/Screenshot%202023-12-20%20024827.png)
-
-[node.js]: http://nodejs.org
-[express]: http://expressjs.com
-[MySQL]: https://www.mysql.com/
-[App Engine]: https://cloud.google.com/appengine?hl=en
+-   **Node.js**: Runtime environment
+-   **Express**: Web framework
+-   **mysql2**: Driver MySQL untuk Node.js
+-   **dotenv**: Untuk memuat variabel environment dari file `.env`
+-   **nodemon**: Memantau perubahan file dan me-restart server secara otomatis
