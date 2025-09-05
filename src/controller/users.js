@@ -31,7 +31,6 @@ const updateUser = async (req, res) => {
         await UsersModels.updateUser(body, idUser);    
         sendSuccess(res, 'UPDATE user berhasil', { id: idUser, ...body });
     } catch (error) {
-        console.error('Error in updateUser:', error)
     }
 }
 
