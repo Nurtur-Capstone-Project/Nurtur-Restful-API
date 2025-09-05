@@ -4,28 +4,40 @@ const getAllUsers = async (req, res) => {
     try {
         const [rows] = await UsersModels.getAllUsers();
         res.json({
-            message: 'GET all users berhasil'
+            message: 'GET all users berhasil',
+            data: rows
         })
     } catch (error) {
+        console.error('Error in getAllUsers:', error);
         res.status(500).json({
             message: 'Server Error',
-            serverMessage: error,
+            serverMessage: 'An unexpected error occurred on the server.',
         })
     }
 }
 
 const createNewUser = async (req, res) => {
     const { body } = req;
+    const { name, email, password } = body;
+
+    if (!name || !email || !password) {
+        return res.status(400).json({
+            message: 'Anda mengirimkan data yang tidak lengkap',
+            data: null,
+        });
+    }
+
     try {
         await UsersModels.createNewUser(body);
-        res.json({
+        res.status(201).json({
             message: 'CREATE new user berhasil',
             data: body
         })
     } catch (error) {
+        console.error('Error in createNewUser:', error);
         res.status(500).json({
             message: 'Server Error',
-            serverMessage: error,
+            serverMessage: 'An unexpected error occurred on the server.',
         })
     }
 }
@@ -33,6 +45,15 @@ const createNewUser = async (req, res) => {
 const updateUser = async (req, res) => {
     const {idUser} = req.params;
     const { body } = req;
+    const { name, email, password } = body;
+
+    if (!name || !email || !password) {
+        return res.status(400).json({
+            message: 'Anda mengirimkan data yang tidak lengkap',
+            data: null,
+        });
+    }
+
     try {
         await UsersModels.updateUser(body, idUser);    
         res.json({
@@ -43,9 +64,10 @@ const updateUser = async (req, res) => {
             },
         })
     } catch (error) {
+        console.error('Error in updateUser:', error);
         res.status(500).json({
             message: 'Server Error',
-            serverMessage: error,
+            serverMessage: 'An unexpected error occurred on the server.',
         })
     }
 }
@@ -59,9 +81,10 @@ const deleteUser = async (req, res) => {
             data: null
         })
     } catch (error) {
+        console.error('Error in deleteUser:', error);
         res.status(500).json({
             message: 'Server error',
-            serverMessage: error,
+            serverMessage: 'An unexpected error occurred on the server.',
         })
     }
 }
