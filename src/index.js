@@ -1,5 +1,5 @@
-require('dotenv').config()
-const PORT = process.env.PORT || 5000;
+const config = require('./config/index.js');
+const PORT = config.port;
 
 const express = require('express');
 
