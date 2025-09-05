@@ -1,28 +1,28 @@
 # Nurtur RESTful API
 
-Sebuah RESTful API untuk manajemen data pengguna yang dibangun dengan Node.js, Express, dan MySQL. API ini dirancang dengan mempertimbangkan keamanan dan kemudahan penggunaan.
+A RESTful API for user data management built with Node.js, Express, and MySQL. This API is designed with security and ease of use in mind.
 
 ## Features
 
--   **CRUD Operations**: Menyediakan endpoint lengkap untuk Create, Read, Update, dan Delete (CRUD) data pengguna.
--   **Keamanan**: Menggunakan *prepared statements* untuk melindungi dari serangan SQL Injection.
--   **Validasi Input**: Menerapkan validasi dasar di sisi server untuk memastikan integritas data.
--   **Respons Terstandarisasi**: Menggunakan format JSON yang konsisten untuk semua respons sukses dan error.
--   **Manajemen Konfigurasi**: Konfigurasi terpusat untuk kemudahan pengelolaan environment.
+-   **CRUD Operations**: Provides complete endpoints for Create, Read, Update, and Delete (CRUD) user data.
+-   **Security**: Uses prepared statements to protect against SQL Injection attacks.
+-   **Input Validation**: Implements basic server-side validation to ensure data integrity.
+-   **Standardized Responses**: Uses a consistent JSON format for all successful and error responses.
+-   **Configuration Management**: Centralized configuration for easy environment management.
 
 ## API Endpoints
 
-Berikut adalah dokumentasi untuk setiap endpoint yang tersedia.
+Below is the documentation for each available endpoint.
 
 ### Get All Users
 
 -   **Method**: `GET`
 -   **Endpoint**: `/users`
--   **Deskripsi**: Mengambil semua data pengguna.
--   **Contoh Respons Sukses (200 OK)**:
+-   **Description**: Retrieves all user records.
+-   **Success Response Example (200 OK)**:
     ```json
     {
-        "message": "GET all users berhasil",
+        "message": "GET all users successful",
         "data": [
             {
                 "id": 1,
@@ -44,7 +44,7 @@ Berikut adalah dokumentasi untuk setiap endpoint yang tersedia.
 
 -   **Method**: `POST`
 -   **Endpoint**: `/users`
--   **Deskripsi**: Membuat pengguna baru.
+-   **Description**: Creates a new user.
 -   **Request Body**:
     ```json
     {
@@ -54,10 +54,10 @@ Berikut adalah dokumentasi untuk setiap endpoint yang tersedia.
         "address": "123 Main St"
     }
     ```
--   **Contoh Respons Sukses (200 OK)**:
+-   **Success Response Example (200 OK)**:
     ```json
     {
-        "message": "CREATE new user berhasil",
+        "message": "CREATE new user successful",
         "data": {
             "name": "John Doe",
             "email": "john@example.com",
@@ -66,11 +66,11 @@ Berikut adalah dokumentasi untuk setiap endpoint yang tersedia.
         }
     }
     ```
--   **Contoh Respons Gagal (400 Bad Request)**:
+-   **Error Response Example (400 Bad Request)**:
     ```json
     {
-        "message": "Request Body tidak valid",
-        "error": "Nama, email, dan password harus diisi"
+        "message": "Request body is not valid",
+        "error": "Name, email, and password are required"
     }
     ```
 
@@ -78,7 +78,7 @@ Berikut adalah dokumentasi untuk setiap endpoint yang tersedia.
 
 -   **Method**: `PATCH`
 -   **Endpoint**: `/users/:idUser`
--   **Deskripsi**: Memperbarui data pengguna berdasarkan ID.
+-   **Description**: Updates a user's data by ID.
 -   **Request Body**:
     ```json
     {
@@ -86,10 +86,10 @@ Berikut adalah dokumentasi untuk setiap endpoint yang tersedia.
         "address": "456 New Ave"
     }
     ```
--   **Contoh Respons Sukses (200 OK)**:
+-   **Success Response Example (200 OK)**:
     ```json
     {
-        "message": "UPDATE user berhasil",
+        "message": "UPDATE user successful",
         "data": {
             "id": "1",
             "name": "John Doe Updated",
@@ -102,36 +102,36 @@ Berikut adalah dokumentasi untuk setiap endpoint yang tersedia.
 
 -   **Method**: `DELETE`
 -   **Endpoint**: `/users/:idUser`
--   **Deskripsi**: Menghapus pengguna berdasarkan ID.
--   **Contoh Respons Sukses (200 OK)**:
+-   **Description**: Deletes a user by ID.
+-   **Success Response Example (200 OK)**:
     ```json
     {
-        "message": "Delete user berhasil",
+        "message": "Delete user successful",
         "data": null
     }
     ```
 
-## Struktur Proyek
+## Project Structure
 ```
 /
 ├── src/
-│   ├── config/         # Konfigurasi aplikasi (database, env)
-│   ├── controller/     # Logika bisnis (request & response)
-│   ├── middleware/     # Middleware Express (e.g., logging)
-│   ├── models/         # Interaksi dengan database (query)
-│   └── routes/         # Definisi rute API
-├── .env.example        # Contoh variabel environment
+│   ├── config/         # Application configuration (database, env)
+│   ├── controller/     # Business logic (request & response)
+│   ├── middleware/     # Express middleware (e.g., logging)
+│   ├── models/         # Database interaction (queries)
+│   └── routes/         # API route definitions
+├── .env.example        # Example environment variables
 ├── .gitignore
 ├── package.json
 └── README.md
 ```
 
-## Instalasi dan Setup
+## Installation and Setup
 
-1.  **Clone repository ini:**
+1.  **Clone this repository:**
     ```sh
-    git clone <URL_REPOSITORY_ANDA>
-    cd <NAMA_DIREKTORI>
+    git clone <URL_OF_YOUR_REPOSITORY>
+    cd <DIRECTORY_NAME>
     ```
 
 2.  **Install dependencies:**
@@ -140,29 +140,29 @@ Berikut adalah dokumentasi untuk setiap endpoint yang tersedia.
     ```
 
 3.  **Setup Environment Variables:**
-    Salin file `.env.example` menjadi `.env`.
+    Copy the `.env.example` file to `.env`.
     ```sh
     cp .env.example .env
     ```
-    Kemudian, sesuaikan isinya dengan konfigurasi database Anda.
+    Then, adjust the contents to match your database configuration.
     ```
     PORT=5000
     DB_HOST=localhost
     DB_USERNAME=root
     DB_PASSWORD=
-    DB_NAME=nama_database_anda
+    DB_NAME=your_database_name
     ```
 
-4.  **Jalankan aplikasi:**
+4.  **Run the application:**
     ```sh
     npm start
     ```
-    Server akan berjalan di `http://localhost:5000`.
+    The server will run at `http://localhost:5000`.
 
 ## Tech Stack
 
 -   **Node.js**: Runtime environment
 -   **Express**: Web framework
--   **mysql2**: Driver MySQL untuk Node.js
--   **dotenv**: Untuk memuat variabel environment dari file `.env`
--   **nodemon**: Memantau perubahan file dan me-restart server secara otomatis
+-   **mysql2**: MySQL driver for Node.js
+-   **dotenv**: Loads environment variables from a `.env` file
+-   **nodemon**: Watches for file changes and restarts the server automatically
